@@ -2,11 +2,12 @@ import express from 'express';
 import routes from './routes';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import options from './options'
 
 const app = express();
 
 //Connect to the database
-mongoose.connect('mongodb://Mandukk:123456@ds149501.mlab.com:49501/blog-api', () => {
+mongoose.connect(options.dbUrl, () => {
   console.log('Database connected!');
 });
 
