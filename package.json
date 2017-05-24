@@ -1,5 +1,5 @@
 {
-  "name": "asklol-api",
+  "name": "blog-api",
   "version": "1.0.0",
   "description": "API do site ASKLOL",
   "main": "index.js",

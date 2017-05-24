@@ -5,10 +5,17 @@ const routes = express();
 //Import controllers
 import postController from './controllers/postController';
 import userController from './controllers/userController';
+import commentController from './controllers/commentController';
 
-routes.get('/post', postController.get);
-routes.post('/post/new', postController.post);
-routes.post('/signup', userController.post);
+//Post routes
+routes.get('/posts', postController.getAll);
+routes.post('/posts/new', postController.post);
+
+//User routes
+routes.post('/register', userController.post);
+
+//Comment routes
+routes.post('/comment', commentController.post);
 
 
 export default routes;

@@ -2,37 +2,46 @@ import db from './../models';
 
 let postController = {};
 
-postController.get = (req, res) => {
-  db.Post.find({}).then(data => {
+postController.getAll = (req, res) => {
+  db.Post.find({}).populate({
+    path: '_author',
+    select: 'username -_id'
+  }).populate({
+    path: '_comments',
+    select: 'text createdAt _author',
+    match: { 'isDeleted': false }
+  }).then(posts => {
     res.status(200).json({
       success: true,
-      posts: data
+      data: posts
     });
   }).catch(err => {
     res.status(500).json({
-      message: err
+      message: err.toString()
     });
   });
 }
 
 postController.post = (req, res) => {
-  const { author, post } = req.body;
+  const { title, text, userId } = req.body;
+  //Later, get userId by jwt
 
   //Validation here!
 
   const newPost = new db.Post({
-    author,
-    post
+    title,
+    text,
+    _author: userId
   });
 
-  newPost.save().then((newUser) =>{
+  newPost.save().then((newPost) =>{
     res.status(200).json({
       success: true,
-      data: newUser
+      data: newPost
     });
   }).catch((err) => {
     res.status(500).json({
-      message: err
+      message: err.toString()
     });
   });
 }
